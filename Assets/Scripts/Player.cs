@@ -20,23 +20,26 @@ public class Player : MonoBehaviour
         PlayerBody = GetComponent<Rigidbody>();
         AnimController = GetComponent<Animation_State_Controller>();
         Control = new PlayerAction();
+        Control.Player.Punch.performed += context => Attack();  
     }
 
     //Quick and dirty
     private void OnEnable()
     {
-        Control.Enable();
+        Control.Player.Enable();
     }
 
     private void OnDisable()
     {
-        Control.Disable();
+        Control.Player.Disable();
     }
 
     private void Update()
     {
-        Control.Player.Punch.performed += context => Attack();
-        Control.Player.Movement.performed += context => Movement(context.ReadValue<Vector2>());
+        
+        //Control.Player.Movement.performed += context => Movement(context.ReadValue<Vector2>());
+        Vector2 _move = Control.Player.Movement.ReadValue<Vector2>();
+        Movement(_move);
     }
 
     private void FixedUpdate()
