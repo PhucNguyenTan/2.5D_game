@@ -1,64 +1,74 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
-    private Rigidbody _playerBody;
+    private Rigidbody PlayerBody;
     [SerializeField]
-    float _walkSpeed;
+    private float WalkSpeed = 1f;
 
-    private Animation_State_Controller _animController;
-    private Handle_input _input;
+    public PlayerAction Control;
 
-    private float _angleY = 90f;
+    private Animation_State_Controller AnimController;
+
+    private float AngleY = 90f;
 
     private void Awake()
     {
-        _playerBody = GetComponent<Rigidbody>();
-        _animController = GetComponent<Animation_State_Controller>();
-        _input = GetComponent<Handle_input>();
+        PlayerBody = GetComponent<Rigidbody>();
+        AnimController = GetComponent<Animation_State_Controller>();
+        Control = new PlayerAction();
+    }
+
+    //Quick and dirty
+    private void OnEnable()
+    {
+        Control.Enable();
+    }
+
+    private void OnDisable()
+    {
+        Control.Disable();
     }
 
     private void Update()
     {
-
+        Control.Player.Punch.performed += context => Attack();
+        Control.Player.Movement.performed += context => Movement(context.ReadValue<Vector2>());
     }
 
     private void FixedUpdate()
     {
-        Movement();
-        Attack();
+
     }
 
-    private void Movement()
+    private void Movement(Vector2 inputDirection)
     {
-        _animController.Walking(_input._inputDirection);
-        if (_input._inputDirection == 0)
+        AnimController.Walking(inputDirection.x);
+        if (inputDirection.x == 0)
         {
             return;
         }
-        if (_input._inputDirection < 0)
+        if (inputDirection.x < 0)
         {
-            _angleY = -90f;
+            AngleY = -90f;
         }
-        else if (_input._inputDirection > 0)
+        else if (inputDirection.x > 0)
         {
-            _angleY = 90f;
+            AngleY = 90f;
         }
 
-        transform.rotation = Quaternion.Euler(0, _angleY, 0);
-        _playerBody.velocity = new Vector3(_input._inputDirection * _walkSpeed, 0f, 0f);
+        Debug.Log(inputDirection.x);
+
+        transform.rotation = Quaternion.Euler(0, AngleY, 0);
+        PlayerBody.velocity = new Vector3(inputDirection.x * WalkSpeed, 0f, 0f);
 
     }
 
     private void Attack()
     {
-        if (!_input._doingPunch)
-        {
-            return;
-        }
-
-        _animController.Punch();
+        AnimController.Punch();
     }
 }
