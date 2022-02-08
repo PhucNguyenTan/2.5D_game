@@ -1,64 +1,71 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
-    private Rigidbody _playerBody;
+    
     [SerializeField]
     float _walkSpeed;
 
-    private Animation_State_Controller _animController;
-    private Handle_input _input;
+    Animation_State_Controller _animController;
+    Rigidbody _playerBody;
+    PlayerAction _control;
 
-    private float _angleY = 90f;
-
+    float _angleY = 90f;
+    Vector2 _move;
     private void Awake()
     {
         _playerBody = GetComponent<Rigidbody>();
         _animController = GetComponent<Animation_State_Controller>();
-        _input = GetComponent<Handle_input>();
+        _control = new PlayerAction();
+        _control.Player.Punch.started += ctx => Attack();
     }
 
     private void Update()
     {
-
+        _move = _control.Player.Movement.ReadValue<Vector2>();
     }
 
-    private void FixedUpdate()
+     private void FixedUpdate()
     {
-        Movement();
-        Attack();
+        Movement(_move);
     }
 
-    private void Movement()
+    void Movement(Vector2 move)
     {
-        _animController.Walking(_input._inputDirection);
-        if (_input._inputDirection == 0)
+        _animController.Walking(move.x);
+        if (move.x == 0)
         {
             return;
         }
-        if (_input._inputDirection < 0)
+        if (move.x < 0)
         {
             _angleY = -90f;
         }
-        else if (_input._inputDirection > 0)
+        else if (move.x > 0)
         {
             _angleY = 90f;
         }
 
         transform.rotation = Quaternion.Euler(0, _angleY, 0);
-        _playerBody.velocity = new Vector3(_input._inputDirection * _walkSpeed, 0f, 0f);
+        _playerBody.velocity = new Vector3(move.x * _walkSpeed, 0f, 0f);
 
     }
 
-    private void Attack()
+    public void Attack()
     {
-        if (!_input._doingPunch)
-        {
-            return;
-        }
-
         _animController.Punch();
+    }
+
+    private void OnEnable()
+    {
+        _control.Player.Enable();
+    }
+
+    private void OnDisable()
+    {
+        _control.Player.Disable();
     }
 }
