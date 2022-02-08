@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class Animation_State_Controller : MonoBehaviour
 {
+
     private Animator Animator;
     private int i = 0;
 
