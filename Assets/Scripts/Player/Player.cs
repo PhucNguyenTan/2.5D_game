@@ -1,10 +1,47 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
+    public Player_state_machine StateMachine{ get; private set; }
+    public Animator Anim { get; private set; }
+
+    public Player_idle_state idleState { get; private set; }
+    public Player_ground_state groundState { get; private set; }
+    public Player_walk_state walkState { get; private set; }
+
+    public InputHandler inputHandler { get; private set; }
+
+    [SerializeField]
+    private Player_data data;
+
+    private void Awake()
+    {
+        StateMachine = new Player_state_machine();
+
+        idleState = new Player_idle_state(this, StateMachine, data, "idle");
+        walkState = new Player_walk_state(this, StateMachine, data, "walk");
+    }
+
+    private void Start()
+    {
+        Anim = GetComponentInChildren<Animator>();
+        inputHandler = GetComponent<InputHandler>();
+        StateMachine.Initialized(idleState);
+    }
+
+    private void Update()
+    {
+        StateMachine.currentState.LogicUpdate();
+    }
+
+    private void FixedUpdate()
+    {
+        StateMachine.currentState.PhysicsUpdate();
+    }
+
+    /*
     private Rigidbody PlayerBody;
     [SerializeField]
     private float WalkSpeed = 1f;
@@ -73,5 +110,5 @@ public class Player : MonoBehaviour
     private void Attack()
     {
         AnimController.Punch();
-    }
+    }*/
 }

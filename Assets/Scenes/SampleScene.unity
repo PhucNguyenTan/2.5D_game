@@ -466,6 +466,8 @@ GameObject:
   - component: {fileID: 1233536693}
   - component: {fileID: 1233536695}
   - component: {fileID: 1233536694}
+  - component: {fileID: 1233536696}
+  - component: {fileID: 1233536697}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -577,11 +579,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1233536688}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 00810cc7526dcd1459afb1ce656d4e36, type: 3}
+  m_Script: {fileID: 11500000, guid: beb2bc5fb13b08d4f91ae28bd1bf738d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WalkSpeed: 1
-  AngleY: 90
+  data: {fileID: 0}
 --- !u!114 &1233536695
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -594,6 +595,68 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 980ed38763e8f9344806ef55e1e10830, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1233536696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1233536688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c417009dbd51d244e86ea883f5434827, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1233536697
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1233536688}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Actions: {fileID: -944628639613478452, guid: d83e7d086dff30e4f92f2a749a098280, type: 3}
+  m_NotificationBehavior: 2
+  m_UIInputModule: {fileID: 0}
+  m_DeviceLostEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_DeviceRegainedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ControlsChangedEvent:
+    m_PersistentCalls:
+      m_Calls: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1233536696}
+        m_TargetAssemblyTypeName: InputHandler, Assembly-CSharp
+        m_MethodName: OnMoveInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 369b78e0-576d-4753-910a-655bf183a101
+    m_ActionName: Player/Movement[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: bf5f4eac-af22-4422-8932-81210011e3c7
+    m_ActionName: Player/Punch[/Keyboard/e]
+  m_NeverAutoSwitchControlSchemes: 0
+  m_DefaultControlScheme: 
+  m_DefaultActionMap: Player
+  m_SplitScreenIndex: -1
+  m_Camera: {fileID: 0}
 --- !u!1001 &1626112910
 PrefabInstance:
   m_ObjectHideFlags: 0
