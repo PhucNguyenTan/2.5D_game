@@ -17,7 +17,7 @@ public class Player_state_machine
     public void ChangeState(Player_base_state newState)
     {
         currentState.Exit();
-        newState = currentState;
+        currentState = newState;
         currentState.Enter();
     }
 }
