@@ -24,11 +24,11 @@ public class Player_walk_state : Player_ground_state
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-
-        Debug.Log("in_walk_logic");
+        player.CheckToFlipX();
+        player.SetVelocityX(input.x);
         if (input.x == 0f)
         {
-            pStateMachine.ChangeState(player.idleState);
+            pStateMachine.ChangeState(player.IdleState);
         }
     }
 

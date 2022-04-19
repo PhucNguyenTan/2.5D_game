@@ -4,31 +4,41 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    #region States Variables
     public Player_state_machine StateMachine{ get; private set; }
     public Animator Anim { get; private set; }
+    public Player_idle_state IdleState { get; private set; }
+    public Player_ground_state GroundState { get; private set; }
+    public Player_walk_state WalkState { get; private set; }
+    #endregion
 
-    public Player_idle_state idleState { get; private set; }
-    public Player_ground_state groundState { get; private set; }
-    public Player_walk_state walkState { get; private set; }
+    #region Components
+    public InputHandler InputHandle { get; private set; }
+    public Rigidbody PlayerBody { get; private set; }
+    #endregion
 
-    public InputHandler inputHandler { get; private set; }
-
+    #region Other Variables
     [SerializeField]
     private Player_data data;
+    public float AngleY = 90f;
+    public int isFacingRight { get; private set; }
+    #endregion
 
+    #region Unity callback Functions
     private void Awake()
     {
         StateMachine = new Player_state_machine();
-
-        idleState = new Player_idle_state(this, StateMachine, data, "idle");
-        walkState = new Player_walk_state(this, StateMachine, data, "walk");
+        PlayerBody = GetComponent<Rigidbody>();
+        IdleState = new Player_idle_state(this, StateMachine, data, "idle");
+        WalkState = new Player_walk_state(this, StateMachine, data, "walk");
     }
 
     private void Start()
     {
         Anim = GetComponentInChildren<Animator>();
-        inputHandler = GetComponent<InputHandler>();
-        StateMachine.Initialized(idleState);
+        InputHandle = GetComponent<InputHandler>();
+        StateMachine.Initialized(IdleState);
+        isFacingRight = 1;
     }
 
     private void Update()
@@ -40,17 +50,49 @@ public class Player : MonoBehaviour
     {
         StateMachine.currentState.PhysicsUpdate();
     }
+    #endregion
+
+    #region Set Functions
+    public void SetVelocityX(float xValue)
+    {
+        PlayerBody.velocity = new Vector3(xValue * data.movementVelocity, 0f, 0f);
+
+    }
+    #endregion
+
+    #region Check Functions
+    public void CheckToFlipX()
+    {
+        if(InputHandle.movementInput.x < 0 && isFacingRight > 0)
+        {
+            FlipX();
+        }
+        else if(InputHandle.movementInput.x > 0 && isFacingRight < 0)
+        {
+            FlipX();
+        }
+    }
+    #endregion
+
+    #region Other Functions
+    public void FlipX()
+    {
+        isFacingRight *= -1;
+        transform.rotation = Quaternion.Euler(0f, isFacingRight * AngleY, 0f);
+    }
+    #endregion
 
     /*
     private Rigidbody PlayerBody;
     [SerializeField]
     private float WalkSpeed = 1f;
+    private float AngleY = 90f;
 
     public PlayerAction Control;
 
     private Animation_State_Controller AnimController;
 
-    private float AngleY = 90f;
+    
 
     private void Awake()
     {

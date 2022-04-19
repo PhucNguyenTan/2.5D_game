@@ -26,7 +26,7 @@ public class Player_ground_state : Player_base_state
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        input = player.inputHandler.movementInput;
+        input = player.InputHandle.movementInput;
     }
 
     public override void PhysicsUpdate()

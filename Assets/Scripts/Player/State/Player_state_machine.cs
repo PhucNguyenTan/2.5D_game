@@ -6,8 +6,6 @@ public class Player_state_machine
 {
     public Player_base_state currentState { get; private set; }
     
-
-    
     public void Initialized(Player_base_state startingState)
     {
         currentState = startingState;
