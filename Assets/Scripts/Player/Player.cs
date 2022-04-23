@@ -100,11 +100,22 @@ public class Player : MonoBehaviour
     {
         RaycastHit hit;
         RaycastHit hit2;
+        RaycastHit hit3;
+        Vector3 _point1 = transform.position + Vector3.left * 0.075f;
+        Vector3 _point2 = transform.position + Vector3.right * 0.075f;
+        bool test;
 
-        isGrounded = Physics.Raycast(transform.position + Vector3.left * 0.05f, Vector3.down, out hit, 0.05f, (int)whatIsGround);
-        // || Physics.Raycast(transform.position + Vector3.right * 0.05f, Vector3.down, out hit2, 0.05f, (int)whatIsGround);
+        isGrounded = Physics.Raycast(_point1, Vector3.down, out hit, 0.05f, (int)whatIsGround)
+                  || Physics.Raycast(_point2, Vector3.down, out hit2, 0.05f, (int)whatIsGround);
         //Debug.DrawRay(transform.position + Vector3.left*0.05f, Vector3.down, Color.red);
         //Debug.DrawRay(transform.position + Vector3.right * 0.05f, Vector3.down, Color.red);
+        Debug.DrawLine(_point1, _point1 + Vector3.down * 0.1f, Color.red);
+        Debug.DrawLine(_point2, _point2 + Vector3.down * 0.1f, Color.red);
+        if (!isGrounded)
+        {
+            test = Physics.Raycast(_point1, Vector3.down, out hit3, 0.5f, (int)whatIsGround);
+            Debug.Log(hit3.distance);
+        }
 
 
     }
