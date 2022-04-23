@@ -22,7 +22,7 @@ public class Player : MonoBehaviour
 
     #region Other Variables
     [SerializeField]
-    public Player_data data { get; private set; }
+    private Player_data data;
     public float AngleY = 90f;
     public int isFacingRight { get; private set; }
     #endregion
@@ -71,15 +71,17 @@ public class Player : MonoBehaviour
     #region Set Functions
     public void SetVelocityX(float xValue)
     {
-        PlayerBody.velocity = new Vector3(xValue * data.movementVelocity, 0f, 0f);
+        PlayerBody.velocity = new Vector3(xValue * data.movementVelocity, PlayerBody.velocity.y, 0f);
 
     }
-    #endregion
 
     public void SetVelocityY(float yValue)
     {
-        PlayerBody.velocity = new Vector3(0f, yValue, 0f);
+        PlayerBody.velocity = new Vector3(PlayerBody.velocity.x, yValue, 0f);
     }
+    #endregion
+
+
 
     #region Check Functions
     public void CheckToFlipX()
@@ -99,10 +101,12 @@ public class Player : MonoBehaviour
         RaycastHit hit;
         RaycastHit hit2;
 
-        isGrounded = Physics.Raycast(transform.position + Vector3.left * 0.05f, Vector3.down, out hit, 0.3f, (int)whatIsGround)
-         && Physics.Raycast(transform.position + Vector3.right * 0.05f, Vector3.down, out hit2, 0.3f, (int)whatIsGround);
+        isGrounded = Physics.Raycast(transform.position + Vector3.left * 0.05f, Vector3.down, out hit, 0.05f, (int)whatIsGround);
+        // || Physics.Raycast(transform.position + Vector3.right * 0.05f, Vector3.down, out hit2, 0.05f, (int)whatIsGround);
         //Debug.DrawRay(transform.position + Vector3.left*0.05f, Vector3.down, Color.red);
         //Debug.DrawRay(transform.position + Vector3.right * 0.05f, Vector3.down, Color.red);
+
+
     }
     #endregion
 
