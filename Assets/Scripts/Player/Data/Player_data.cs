@@ -7,6 +7,7 @@ using UnityEngine;
 public class Player_data : ScriptableObject
 {
     [Header("Movement")]
-    public float movementVelocity = 0.001f;
+    public float movementVelocity = 1.0f;
     public float AngleY = 90f;
+    public float jumpForce = 10.0f;
 }

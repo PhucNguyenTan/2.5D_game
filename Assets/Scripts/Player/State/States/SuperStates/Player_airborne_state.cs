@@ -1,8 +1,10 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class Player_walk_state : Player_ground_state
+public class Player_airborne_state : Player_base_state
 {
-    public Player_walk_state(Player player, Player_state_machine pStateMachine, Player_data pData, string animBoolName) : base(player, pStateMachine, pData, animBoolName)
+    public Player_airborne_state(Player player, Player_state_machine pStateMachine, Player_data pData, string animBoolName) : base(player, pStateMachine, pData, animBoolName)
     {
     }
 
@@ -24,9 +26,8 @@ public class Player_walk_state : Player_ground_state
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        player.CheckToFlipX();
-        player.SetVelocityX(xInput.x);
-        if (xInput.x == 0f)
+        player.CheckGround();
+        if (player.isGrounded)
         {
             pStateMachine.ChangeState(player.IdleState);
         }

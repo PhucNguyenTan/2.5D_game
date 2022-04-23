@@ -12,3 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 368f86ffd089ec64e8d94e085847be48, type: 3}
   m_Name: Player_data
   m_EditorClassIdentifier: 
+  movementVelocity: 1
+  AngleY: 90
+  jumpForce: 100

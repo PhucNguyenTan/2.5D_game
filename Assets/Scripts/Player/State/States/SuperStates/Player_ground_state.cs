@@ -2,7 +2,9 @@ using UnityEngine;
 
 public class Player_ground_state : Player_base_state
 {
-    protected Vector2 input;
+    protected Vector2 xInput;
+    protected bool jumpInput;
+
     public Player_ground_state(Player player, Player_state_machine pStateMachine, Player_data pData, string animBoolName) : base(player, pStateMachine, pData, animBoolName)
     {
 
@@ -26,7 +28,13 @@ public class Player_ground_state : Player_base_state
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        input = player.InputHandle.movementInput;
+        xInput = player.InputHandle.movementInput;
+        if (player.InputHandle.Jump)
+        {
+            player.InputHandle.UsedJumpInput();
+            pStateMachine.ChangeState(player.JumpState);
+        }
+        
     }
 
     public override void PhysicsUpdate()

@@ -15,6 +15,7 @@ public class Player_idle_state : Player_ground_state
     public override void Enter()
     {
         base.Enter();
+        player.SetVelocityX(0f);
     }
 
     public override void Exit()
@@ -26,7 +27,7 @@ public class Player_idle_state : Player_ground_state
     {
         base.LogicUpdate();
 
-        if(input.x != 0f)
+        if(xInput.x != 0f)
         {
             pStateMachine.ChangeState(player.WalkState);
             

@@ -136,11 +136,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 07892548ce6e1f24f9802cee4be0e954, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 07892548ce6e1f24f9802cee4be0e954, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.9
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 07892548ce6e1f24f9802cee4be0e954, type: 3}
       propertyPath: m_LocalPosition.z
@@ -462,12 +462,11 @@ GameObject:
   - component: {fileID: 1233536692}
   - component: {fileID: 1233536691}
   - component: {fileID: 1233536690}
-  - component: {fileID: 1233536689}
   - component: {fileID: 1233536693}
-  - component: {fileID: 1233536695}
   - component: {fileID: 1233536694}
   - component: {fileID: 1233536696}
   - component: {fileID: 1233536697}
+  - component: {fileID: 1233536689}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -475,8 +474,8 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!136 &1233536689
-CapsuleCollider:
+--- !u!65 &1233536689
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -485,10 +484,9 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  serializedVersion: 2
+  m_Size: {x: 1.8692405, y: 1.5175576, z: 0.6090622}
+  m_Center: {x: -0.0000056624413, y: 0.72732234, z: 0.05443065}
 --- !u!23 &1233536690
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -582,19 +580,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: beb2bc5fb13b08d4f91ae28bd1bf738d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  data: {fileID: 0}
---- !u!114 &1233536695
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1233536688}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 980ed38763e8f9344806ef55e1e10830, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  data: {fileID: 11400000, guid: 5ad045788764b0c488120628b4ba5da0, type: 2}
+  AngleY: 90
+  isGrounded: 1
+  whatIsGround:
+    serializedVersion: 2
+    m_Bits: 64
+  groundRadius: 0
+  distance: 0
 --- !u!114 &1233536696
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -652,6 +645,22 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: bf5f4eac-af22-4422-8932-81210011e3c7
     m_ActionName: Player/Punch[/Keyboard/e]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1233536696}
+        m_TargetAssemblyTypeName: InputHandler, Assembly-CSharp
+        m_MethodName: OnJumpInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 227e0d23-ccb9-4115-8979-4ac349fa6c2b
+    m_ActionName: Player/Jump[/Keyboard/space]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -664,9 +673,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4153600040929960408, guid: 3d4935bb0321f7142a84d03fd2c00753, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 5930324596621590161, guid: 3d4935bb0321f7142a84d03fd2c00753, type: 3}
       propertyPath: m_Name
       value: Ground (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5930324596621590161, guid: 3d4935bb0321f7142a84d03fd2c00753, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5930324596621590165, guid: 3d4935bb0321f7142a84d03fd2c00753, type: 3}
       propertyPath: m_RootOrder
@@ -900,9 +917,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4153600040929960408, guid: 3d4935bb0321f7142a84d03fd2c00753, type: 3}
+      propertyPath: m_Layer
+      value: 6
+      objectReference: {fileID: 0}
     - target: {fileID: 5930324596621590161, guid: 3d4935bb0321f7142a84d03fd2c00753, type: 3}
       propertyPath: m_Name
       value: Ground
+      objectReference: {fileID: 0}
+    - target: {fileID: 5930324596621590161, guid: 3d4935bb0321f7142a84d03fd2c00753, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 5930324596621590165, guid: 3d4935bb0321f7142a84d03fd2c00753, type: 3}
       propertyPath: m_RootOrder

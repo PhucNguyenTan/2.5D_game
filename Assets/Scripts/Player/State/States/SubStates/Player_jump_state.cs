@@ -1,10 +1,10 @@
-//using System.Collections;
-//using System.Collections.Generic;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class Player_attack_state : Player_ground_state
+public class Player_jump_state : Player_airborne_state
 {
-    public Player_attack_state(Player player, Player_state_machine pStateMachine, Player_data pData, string animBoolName) : base(player, pStateMachine, pData, animBoolName)
+    public Player_jump_state(Player player, Player_state_machine pStateMachine, Player_data pData, string animBoolName) : base(player, pStateMachine, pData, animBoolName)
     {
     }
 
@@ -16,7 +16,6 @@ public class Player_attack_state : Player_ground_state
     public override void Enter()
     {
         base.Enter();
-        player.SetVelocityX(0f);
     }
 
     public override void Exit()
@@ -27,6 +26,8 @@ public class Player_attack_state : Player_ground_state
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+        player.SetVelocityY(player.data.jumpForce);
+        pStateMachine.ChangeState(player.AirState);
     }
 
     public override void PhysicsUpdate()

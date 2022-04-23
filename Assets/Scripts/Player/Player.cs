@@ -5,11 +5,14 @@ using UnityEngine;
 public class Player : MonoBehaviour
 {
     #region States Variables
-    public Player_state_machine StateMachine{ get; private set; }
+    public Player_state_machine StateMachine { get; private set; }
     public Animator Anim { get; private set; }
     public Player_idle_state IdleState { get; private set; }
     public Player_ground_state GroundState { get; private set; }
     public Player_walk_state WalkState { get; private set; }
+    public Player_attack_state AttackState { get; private set; }
+    public Player_airborne_state AirState { get; private set; }
+    public Player_jump_state JumpState { get; private set; }
     #endregion
 
     #region Components
@@ -19,9 +22,18 @@ public class Player : MonoBehaviour
 
     #region Other Variables
     [SerializeField]
-    private Player_data data;
+    public Player_data data { get; private set; }
     public float AngleY = 90f;
     public int isFacingRight { get; private set; }
+    #endregion
+
+    #region TestJump
+    public bool isGrounded;
+    //public Transform groundCheck;
+    public LayerMask whatIsGround;
+    public float groundRadius;
+    private Vector3 hitpoint;
+    public float distance =0f;
     #endregion
 
     #region Unity callback Functions
@@ -31,6 +43,10 @@ public class Player : MonoBehaviour
         PlayerBody = GetComponent<Rigidbody>();
         IdleState = new Player_idle_state(this, StateMachine, data, "idle");
         WalkState = new Player_walk_state(this, StateMachine, data, "walk");
+        AttackState = new Player_attack_state(this, StateMachine, data, "attack");
+        AirState = new Player_airborne_state(this, StateMachine, data, "air");
+        JumpState = new Player_jump_state(this, StateMachine, data, "jump");
+
     }
 
     private void Start()
@@ -60,6 +76,11 @@ public class Player : MonoBehaviour
     }
     #endregion
 
+    public void SetVelocityY(float yValue)
+    {
+        PlayerBody.velocity = new Vector3(0f, yValue, 0f);
+    }
+
     #region Check Functions
     public void CheckToFlipX()
     {
@@ -71,6 +92,17 @@ public class Player : MonoBehaviour
         {
             FlipX();
         }
+    }
+
+    public void CheckGround()
+    {
+        RaycastHit hit;
+        RaycastHit hit2;
+
+        isGrounded = Physics.Raycast(transform.position + Vector3.left * 0.05f, Vector3.down, out hit, 0.3f, (int)whatIsGround)
+         && Physics.Raycast(transform.position + Vector3.right * 0.05f, Vector3.down, out hit2, 0.3f, (int)whatIsGround);
+        //Debug.DrawRay(transform.position + Vector3.left*0.05f, Vector3.down, Color.red);
+        //Debug.DrawRay(transform.position + Vector3.right * 0.05f, Vector3.down, Color.red);
     }
     #endregion
 
