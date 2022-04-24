@@ -38,8 +38,8 @@ ModelImporter:
       name: Punching
       takeName: mixamo.com
       internalID: 0
-      firstFrame: 10
-      lastFrame: 30
+      firstFrame: 7.1
+      lastFrame: 19.9
       wrapMode: 0
       orientationOffsetY: 0
       level: 0

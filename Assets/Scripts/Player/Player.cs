@@ -82,8 +82,7 @@ public class Player : MonoBehaviour
     public void SetMovementX(float xValue)
     {
         hSpeed = xValue * data.movementVelocity;
-
-
+        Debug.Log(hSpeed);
     }
 
     public void SetPrevXMove()
@@ -118,6 +117,11 @@ public class Player : MonoBehaviour
         {
             FlipX();
         }
+    }
+
+    public bool AnimatorIsPlaying()
+    {
+        return Anim.GetCurrentAnimatorStateInfo(0).normalizedTime > 1.0f;
     }
 
     /*public void CheckGround()

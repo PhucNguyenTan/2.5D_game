@@ -24,8 +24,11 @@ public class Player_walk_state : Player_ground_state
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        player.CheckToFlipX();
-        player.SetMovementX(xInput.x);
+        if (!player.InputHandle.Attack)
+        {
+            player.CheckToFlipX();
+            player.SetMovementX(xInput.x);
+        }
         if (xInput.x == 0f)
         {
             pStateMachine.ChangeState(player.IdleState);

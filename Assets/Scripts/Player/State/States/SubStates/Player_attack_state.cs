@@ -17,7 +17,7 @@ public class Player_attack_state : Player_ground_state
     {
         base.Enter();
         player.SetMovementX(0f);
-    }
+;    }
 
     public override void Exit()
     {
@@ -27,6 +27,11 @@ public class Player_attack_state : Player_ground_state
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+        if (player.AnimatorIsPlaying())
+        {
+            player.InputHandle.UsedAttackInput();
+            pStateMachine.ChangeState(player.IdleState);
+        }
     }
 
     public override void PhysicsUpdate()

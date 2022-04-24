@@ -35,7 +35,7 @@ public class Player_base_state
 
     public virtual void LogicUpdate()
     {
-
+        Debug.Log(animBoolName);
     }
 
     public virtual void PhysicsUpdate()

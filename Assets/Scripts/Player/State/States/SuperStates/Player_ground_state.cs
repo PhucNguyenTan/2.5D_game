@@ -35,7 +35,14 @@ public class Player_ground_state : Player_base_state
             player.SetPrevXMove();
             pStateMachine.ChangeState(player.JumpState);
         }
-        
+
+        if (player.InputHandle.Attack)
+        {
+            
+            pStateMachine.ChangeState(player.AttackState);
+        }
+
+
     }
 
     public override void PhysicsUpdate()

@@ -28,7 +28,7 @@ public class Player_idle_state : Player_ground_state
     {
         base.LogicUpdate();
 
-        if(xInput.x != 0f)
+        if(xInput.x != 0f && !player.InputHandle.Attack)
         {
             pStateMachine.ChangeState(player.WalkState);
             

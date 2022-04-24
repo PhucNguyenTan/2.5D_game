@@ -7,6 +7,7 @@ public class InputHandler : MonoBehaviour
 {
     public Vector2 movementInput { get; private set; }
     public bool Jump { get; private set; }
+    public bool Attack { get; private set; }
 
     public void OnMoveInput(InputAction.CallbackContext context)
     {
@@ -22,4 +23,14 @@ public class InputHandler : MonoBehaviour
     }
 
     public void UsedJumpInput() => Jump = false;
+
+    public void OnAttackInput(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            Attack = true;
+        }
+    }
+
+    public void UsedAttackInput() => Attack = false;
 }
