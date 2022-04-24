@@ -26,7 +26,7 @@ public class Player_jump_state : Player_airborne_state
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        player.SetVelocityY(3f);
+        player.AddJumpForce();
         pStateMachine.ChangeState(player.AirState);
     }
 

@@ -25,7 +25,7 @@ public class Player_walk_state : Player_ground_state
     {
         base.LogicUpdate();
         player.CheckToFlipX();
-        player.SetVelocityX(xInput.x);
+        player.SetMovementX(xInput.x);
         if (xInput.x == 0f)
         {
             pStateMachine.ChangeState(player.IdleState);

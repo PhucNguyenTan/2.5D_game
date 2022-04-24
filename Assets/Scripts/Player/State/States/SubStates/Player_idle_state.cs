@@ -15,12 +15,13 @@ public class Player_idle_state : Player_ground_state
     public override void Enter()
     {
         base.Enter();
-        player.SetVelocityX(0f);
+        player.SetMovementX(0f);
     }
 
     public override void Exit()
     {
         base.Exit();
+        player.SetPrevXMove();
     }
 
     public override void LogicUpdate()

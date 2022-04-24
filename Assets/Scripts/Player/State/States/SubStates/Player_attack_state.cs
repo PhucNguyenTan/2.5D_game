@@ -16,7 +16,7 @@ public class Player_attack_state : Player_ground_state
     public override void Enter()
     {
         base.Enter();
-        player.SetVelocityX(0f);
+        player.SetMovementX(0f);
     }
 
     public override void Exit()

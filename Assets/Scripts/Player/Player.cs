@@ -17,7 +17,8 @@ public class Player : MonoBehaviour
 
     #region Components
     public InputHandler InputHandle { get; private set; }
-    public Rigidbody PlayerBody { get; private set; }
+    //public Rigidbody PlayerBody { get; private set; }
+    public CharacterController CharConotrol { get; private set; }
     #endregion
 
     #region Other Variables
@@ -27,25 +28,32 @@ public class Player : MonoBehaviour
     public int isFacingRight { get; private set; }
     #endregion
 
+
+
     #region TestJump
-    public bool isGrounded;
-    //public Transform groundCheck;
-    public LayerMask whatIsGround;
-    public float groundRadius;
-    private Vector3 hitpoint;
-    public float distance =0f;
+    private float vSpeed = 0f;
+    private float hSpeed = 0f;
+    private Vector3 move;
+    private float gravity = 9.8f;
+    private float initialJumpVelocity;
+    private float maxJumpTime = 0.5f;
+    private float maxJumpHeight = 0.5f;
+    private float prevHspeed;
     #endregion
 
     #region Unity callback Functions
     private void Awake()
     {
         StateMachine = new Player_state_machine();
-        PlayerBody = GetComponent<Rigidbody>();
+        //PlayerBody = GetComponent<Rigidbody>();
+        CharConotrol = GetComponent<CharacterController>();
         IdleState = new Player_idle_state(this, StateMachine, data, "idle");
         WalkState = new Player_walk_state(this, StateMachine, data, "walk");
         AttackState = new Player_attack_state(this, StateMachine, data, "attack");
         AirState = new Player_airborne_state(this, StateMachine, data, "air");
         JumpState = new Player_jump_state(this, StateMachine, data, "jump");
+
+        SetJumpVar();
 
     }
 
@@ -60,6 +68,7 @@ public class Player : MonoBehaviour
     private void Update()
     {
         StateMachine.currentState.LogicUpdate();
+        Movement();
     }
 
     private void FixedUpdate()
@@ -68,16 +77,31 @@ public class Player : MonoBehaviour
     }
     #endregion
 
+
     #region Set Functions
-    public void SetVelocityX(float xValue)
+    public void SetMovementX(float xValue)
     {
-        PlayerBody.velocity = new Vector3(xValue * data.movementVelocity, PlayerBody.velocity.y, 0f);
+        hSpeed = xValue * data.movementVelocity;
+
 
     }
 
-    public void SetVelocityY(float yValue)
+    public void SetPrevXMove()
     {
-        PlayerBody.velocity = new Vector3(PlayerBody.velocity.x, yValue, 0f);
+        prevHspeed = hSpeed;
+    }
+
+    public void AddJumpForce()
+    {
+        vSpeed = initialJumpVelocity;
+        hSpeed = prevHspeed;
+    }
+
+    public void SetJumpVar()
+    {
+        float timeToApex = maxJumpTime / 2;
+        gravity = (-2 * maxJumpTime) / Mathf.Pow(timeToApex, 2);
+        initialJumpVelocity = (2 * maxJumpHeight) / timeToApex;
     }
     #endregion
 
@@ -96,29 +120,10 @@ public class Player : MonoBehaviour
         }
     }
 
-    public void CheckGround()
+    /*public void CheckGround()
     {
-        RaycastHit hit;
-        RaycastHit hit2;
-        RaycastHit hit3;
-        Vector3 _point1 = transform.position + Vector3.left * 0.075f;
-        Vector3 _point2 = transform.position + Vector3.right * 0.075f;
-        bool test;
-
-        isGrounded = Physics.Raycast(_point1, Vector3.down, out hit, 0.05f, (int)whatIsGround)
-                  || Physics.Raycast(_point2, Vector3.down, out hit2, 0.05f, (int)whatIsGround);
-        //Debug.DrawRay(transform.position + Vector3.left*0.05f, Vector3.down, Color.red);
-        //Debug.DrawRay(transform.position + Vector3.right * 0.05f, Vector3.down, Color.red);
-        Debug.DrawLine(_point1, _point1 + Vector3.down * 0.1f, Color.red);
-        Debug.DrawLine(_point2, _point2 + Vector3.down * 0.1f, Color.red);
-        if (!isGrounded)
-        {
-            test = Physics.Raycast(_point1, Vector3.down, out hit3, 0.5f, (int)whatIsGround);
-            Debug.Log(hit3.distance);
-        }
-
-
-    }
+        isGrounded = CharConotrol.isGrounded;
+    }*/
     #endregion
 
     #region Other Functions
@@ -126,6 +131,15 @@ public class Player : MonoBehaviour
     {
         isFacingRight *= -1;
         transform.rotation = Quaternion.Euler(0f, isFacingRight * AngleY, 0f);
+    }
+
+    public void Movement()
+    {
+        this.move = new Vector3(hSpeed, vSpeed, 0f);
+        this.move.y += gravity * Time.deltaTime; // Add gravity to y velocity
+        vSpeed = this.move.y;
+        CharConotrol.Move(this.move * Time.deltaTime);
+        Debug.Log(this.move.y);
     }
     #endregion
 

@@ -32,6 +32,7 @@ public class Player_ground_state : Player_base_state
         if (player.InputHandle.Jump)
         {
             player.InputHandle.UsedJumpInput();
+            player.SetPrevXMove();
             pStateMachine.ChangeState(player.JumpState);
         }
         

@@ -26,8 +26,7 @@ public class Player_airborne_state : Player_base_state
     public override void LogicUpdate()
     {
         base.LogicUpdate();
-        player.CheckGround();
-        if (player.isGrounded)
+        if (player.CharConotrol.isGrounded)
         {
             pStateMachine.ChangeState(player.IdleState);
         }
