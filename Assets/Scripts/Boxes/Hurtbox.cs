@@ -6,7 +6,7 @@ public class Hurtbox : MonoBehaviour
 {
 
     public Collider collider;
-    private ColliderState _state = ColliderState.Open;
+    //private ColliderState _state = ColliderState.Open;
 
     public bool getHitBy(int damage)
     {
